@@ -1,0 +1,74 @@
+﻿@model Demo_ASP_MVC_Exo03.Models.RecipeForm
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h1>Add</h1>
+
+<h4>RecipeForm</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Add">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Origin" class="control-label"></label>
+                <input asp-for="Origin" class="form-control" />
+                <span asp-validation-for="Origin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RecipeType" class="control-label"></label>
+                <select asp-for="RecipeType" 
+                        asp-items="Html.GetEnumSelectList<RecipeType>()" 
+                        class="form-control">
+                        <option value="">---</option>
+                    </select>
+                <span asp-validation-for="RecipeType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div id="zone-ingredient" class="form-group">
+                <label asp-for="Ingredients" class="control-label"></label>
+                <input class="form-control" type="text" name="Ingredients" value="" />
+                <button id="btn-ingredient-more" class="btn btn-warning" type="button">&#10133;</button>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+const btnIngredientMore = document.getElementById('btn-ingredient-more');
+const zoneIngredient = document.getElementById('zone-ingredient');
+
+btnIngredientMore.addEventListener('click', () => {
+
+    const inputIngredient = document.createElement('input');
+    inputIngredient.className = 'form-control';
+    //inputIngredient.classList.add('form-control');
+    inputIngredient.setAttribute('type', 'text');
+    inputIngredient.setAttribute('name', 'Ingredients');
+
+    zoneIngredient.insertBefore(inputIngredient, btnIngredientMore);
+})
+    </script>
+}
